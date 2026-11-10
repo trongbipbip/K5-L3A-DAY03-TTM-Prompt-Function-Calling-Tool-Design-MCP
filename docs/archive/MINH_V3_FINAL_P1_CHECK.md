@@ -1,3 +1,5 @@
+> Hồ sơ lịch sử tại thời điểm bàn giao; trạng thái hiện tại xem [checklist cuối](../../TEAM_HANDOFF_CHECKLIST.md). Các blocker và số test cũ trong file không phải trạng thái bản nộp.
+
 # Kiểm tra lại bản `v3-final-p1` — Minh, 10/11/2026
 
 Phản hồi review cuối của Tân (`MINH_FINAL_REVIEW.md`).

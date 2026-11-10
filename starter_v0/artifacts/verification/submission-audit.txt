@@ -1,0 +1,14 @@
+TTM submission audit — 2026-11-10
+Code base: c229c99; final documentation cleanup
+
+PASS: all relative Markdown file/directory links resolve.
+PASS: 10 unique group cases; 5 single-turn + 5 multi-turn.
+PASS: v4 base artifact hashes match; 19/20 automatic PASS, 0 provider errors.
+PASS: v4 group artifact hashes match; 8/10 automatic PASS, 1 provider errors.
+MANUAL: G10 arguments remain incorrect; counting it as FAIL gives 7/10. Original run JSON is unchanged.
+PASS: version-log run paths exist and artifact hashes match referenced JSON.
+PASS: live evidence includes 6-turn v3 session and p1/v4 follow-ups; original confirmation/refusal session has no send tool call.
+PASS: report A and B1–B6 present; team filled; local UI instructions explicitly replace unprovisioned public hosting.
+PASS: no actual .env in final checkout and no common API/token patterns in scanned deliverables (pattern scan is not exhaustive).
+PASS: final pytest output records 131 passed; 1 external anyio deprecation warning, 0 failed/skipped.
+Model/API was not re-run during documentation cleanup; live evidence is from preserved real runs.

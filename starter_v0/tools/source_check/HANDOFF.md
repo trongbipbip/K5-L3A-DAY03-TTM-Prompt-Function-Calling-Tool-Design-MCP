@@ -1,5 +1,9 @@
 # Bàn giao Feature B — Trần Minh Tân
 
+> Hồ sơ bàn giao ban đầu. Trạng thái chốt bài xem
+> [checklist cuối](../../../TEAM_HANDOFF_CHECKLIST.md); không dùng các trạng
+> thái “chờ tích hợp” bên dưới để suy ra trạng thái hiện tại.
+
 - Ngày: 10/11/2026.
 - Owner: Trần Minh Tân — 2A202603688.
 - Branch: `feature/new-tool-tests-03688`.

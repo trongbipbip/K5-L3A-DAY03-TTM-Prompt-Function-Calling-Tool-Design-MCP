@@ -1,5 +1,8 @@
 # Bàn giao sửa schema source_check — Trần Minh Tân
 
+> Bản sửa này đã merge qua PR #7. Hồ sơ bên dưới giữ trạng thái tại thời điểm
+> bàn giao; xem [checklist cuối](../../../TEAM_HANDOFF_CHECKLIST.md) để theo dõi bản nộp.
+
 - Ngày: 10/11/2026.
 - Branch: `feature/source-check-schema-03688`.
 - Base: `main` tại `9b24a6a` (đã có bản sửa UI của Minh).

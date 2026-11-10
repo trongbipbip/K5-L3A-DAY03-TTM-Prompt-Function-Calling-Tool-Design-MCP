@@ -1,3 +1,5 @@
+> Hồ sơ lịch sử tại thời điểm bàn giao; trạng thái hiện tại xem [checklist cuối](../../TEAM_HANDOFF_CHECKLIST.md). Các blocker và số test cũ trong file không phải trạng thái bản nộp.
+
 # Bàn giao phần Trọng
 
 ## Baseline đã kiểm chứng

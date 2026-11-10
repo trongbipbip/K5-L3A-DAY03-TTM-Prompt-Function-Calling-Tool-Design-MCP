@@ -1,16 +1,27 @@
-# Day 03 Lab v2 Report — Research Agent
+# Báo cáo nộp bài — TTM Research Agent
 
-> File này gồm 2 phần, deadline khác nhau:
-> - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. **Xong trước 16:30** để làm tài liệu phụ trợ khi demo. Có thể làm thành poster HTML/SVG (`artifacts/poster.html` / `poster.svg`) để show cho team cùng zone.
-> - **PHẦN B — Chi tiết / Bằng chứng**: bảng đầy đủ (v0–v3, failure, eval, chat) dựa trên log thật. **Có thể hoàn thiện sau buổi debate để nộp bài.**
+Bản chốt ngày 10/11/2026 · Prompt v4 · Groq `openai/gpt-oss-120b`.
 
 ## Team
 
-- Team: _(điền tên nhóm)_
+- Team: **TTM — Trọng · Tân · Minh**
 - Members: Nguyễn Nho Trọng (2A202603666) — prompt/routing · Trần Minh Tân (2A202603688) — tool mới + unit test · Vũ Quang Minh (2A202603657) — eval, UI, live chat, report
-- Provider/model: Groq `openai/gpt-oss-120b` qua endpoint OpenAI-compatible (`--provider openai --model openai/gpt-oss-120b`, `OPENAI_BASE_URL=https://api.groq.com/openai/v1`); run JSON vì vậy ghi `provider: openai`. Các run đầu của Trọng dùng Gemini `gemini-3.5-flash`, nhưng Gemini free tier chỉ cho 20 request/ngày/model nên không đủ cho v0–v3 — _nhóm cần thống nhất một provider chung cho mọi run so sánh_.
+- Provider/model: Groq `openai/gpt-oss-120b`, qua adapter `openai`, endpoint `https://api.groq.com/openai/v1`. Các run Gemini trước đó giữ làm lịch sử, không gộp vào phép so sánh Groq.
 
 ---
+
+## Kết quả chốt bài
+
+| Hạng mục | Kết quả |
+|---|---|
+| Test offline | **131 passed, 0 failed, 0 skipped** |
+| Base v4 | **19/20 = 95%** |
+| Group v4, tính trên đủ 10 case | **8/10 PASS tự động**, 1 FAIL, 1 provider error |
+| Review bổ sung G10 | **7/10** nếu tính G10 tự thêm nguồn là FAIL |
+
+Nhóm chấp nhận mức 7/10 sau review và ghi rõ lỗi còn lại; không đổi kết quả
+trong run JSON. Accuracy runner là 8/9 do loại provider error khỏi mẫu số.
+Evidence và các artifact hashes được dẫn tại [mục lục bằng chứng](../../docs/EVIDENCE_INDEX.md).
 
 # PHẦN A — Giới thiệu agent
 
@@ -20,15 +31,12 @@ Research agent tiếng Việt: tìm tin trên web và Twitter/X (theo chủ đ�
 
 **Chạy UI local:** `cd starter_v0` → `streamlit run app.py` → http://localhost:8501. UI có ô nhập + nút gửi, hiển thị câu trả lời, danh sách tool call (args + kết quả) theo từng vòng, và tự lưu transcript vào `transcripts/`.
 
-**Link dùng thử (deploy):**
+**Truy cập bản nộp:** [repo main](https://github.com/trongbipbip/K5-L3A-DAY03-TTM-Prompt-Function-Calling-Tool-Design-MCP-/tree/main).
 
-> Dán link public để team khác mở thử ngay. Cách deploy nhanh bằng Cloudflare Tunnel xem README. Nếu deploy Vercel/Streamlit Cloud thì dán link đó.
->
-> URL: _(điền link `trycloudflare.com` khi chạy demo)_
+**UI:** chạy local tại http://localhost:8501; chưa triển khai hosting public. Trong sidebar chọn provider `openai`, model `openai/gpt-oss-120b`, version `v4`. Hướng dẫn môi trường: [TOOL-SETUP.md](../../TOOL-SETUP.md).
 
 ## A2. Tool agent có
 
-> Liệt kê các tool agent đang dùng (gồm tool mới nhóm tự thêm). Mỗi tool 1 dòng: tên + làm được gì.
 
 | Tên tool | Làm được gì | Tool mới nhóm thêm? |
 |---|---|---|
@@ -46,7 +54,6 @@ Research agent tiếng Việt: tìm tin trên web và Twitter/X (theo chủ đ�
 
 ## A3. Câu hỏi mẫu để thử
 
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay. (Các câu này cũng có sẵn dạng nút bấm ở sidebar của UI.)
 
 1. "Tin tức AI hôm nay có gì nổi bật?" → `lookup` (news, day)
 2. "Tweet mới nhất của Sam Altman là gì?" → `timeline` (`sama`)
@@ -60,7 +67,6 @@ Research agent tiếng Việt: tìm tin trên web và Twitter/X (theo chủ đ�
 
 ## B1. Version Evidence
 
-Fill from `artifacts/version_log.csv` and `runs/*.json`.
 
 | Version | Changed Artifact | Hypothesis | Metric Before | Metric After | Run File |
 |---|---|---|---:|---:|---|
@@ -82,7 +88,6 @@ Mọi dòng trên chạy cùng model Groq `openai/gpt-oss-120b`, cùng `data/eva
 
 ## B2. Failure Analysis
 
-Use actual failures from `results[*].result.failures`.
 
 | Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
 |---|---|---|---|---|
@@ -102,7 +107,6 @@ Use actual failures from `results[*].result.failures`.
 
 ## B3. Team Eval Cases
 
-List the 10 cases added to `data/eval_group.json` (5 single turn + 5 multi turn).
 
 | Case ID | What It Tests | Expected Tool/Behavior | Result |
 |---|---|---|---|
@@ -137,7 +141,6 @@ Lưu ý đọc số: `run_eval` loại `provider_error` khỏi mẫu số. Với
 
 ## B4. Live Chat Evidence
 
-Use `transcripts/*.transcript.json`.
 
 Transcript: `transcripts/v3_openai_20261110T125044866247.transcript.json` — `chat.py --provider openai --model openai/gpt-oss-120b --version v3` (Groq), artifact `v3+p39c95958ae7e+tfe7f33e09197` = prompt v3 + `tools.yaml` sau PR #7 (bản code cuối). 6 lượt trong một phiên, nhập qua stdin của `chat.py` theo kịch bản soạn trước; máy chạy chưa có key Tavily/Firecrawl/RapidAPI nên kịch bản ưu tiên tool không cần key (arXiv, `source_check`).
 
@@ -150,7 +153,7 @@ Transcript: `transcripts/v3_openai_20261110T125044866247.transcript.json` — `c
 | 5 | "Không, khoan đã, mình chưa muốn đăng." | (không gọi tool) | v3 | ✅ Không gửi khi người dùng từ chối; ⚠️ câu trả lời bằng tiếng Anh |
 | 6 | Kiểm tra URL/nguồn 3 item (item 2 thiếu `https://`, item 3 thiếu `source`) | `source_check(items=[…])` — item 3 bị **thêm `source="blog.google"`** | v3 | ⚠️ Tool báo đúng `invalid_url` cho item 2, nhưng model **bịa nguồn** cho item 3 nên tool báo hợp lệ — tái hiện đúng lỗi G10 (B2) ngoài eval |
 
-Kết luận live (v3 code cuối): routing, hỏi lại khi thiếu dữ liệu và ranh giới gửi hoạt động đúng; hai lỗi cần sửa là routing arXiv (`papers`) và model tự điền field thiếu khi gọi `source_check`.
+Kết luận phiên v3: hỏi lại và ranh giới gửi được kiểm chứng; routing arXiv và giữ nguyên item còn lỗi. Các lần kiểm tra p1/v4 bên dưới ghi nhận cải thiện và giới hạn còn lại.
 
 **Kiểm tra lại trên `v3-final-p1`** (prompt thêm hai quy tắc cho đúng hai lỗi trên) — transcript `transcripts/v3-final-p1_openai_20261110T143232383389.transcript.json`, artifact `v3-final-p1+pb768ae4b5c47+tfe7f33e09197`, cùng model và cách nhập:
 
@@ -167,14 +170,13 @@ Kết luận live (v3 code cuối): routing, hỏi lại khi thiếu dữ liệu
 
 ## B5. Bonus Evidence
 
-Only fill if your team did bonus.
 
 | Bonus | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
 | send (Telegram) | — (nhóm không cấu hình `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID`, không có lần gửi thật) | Ranh giới xác nhận được kiểm chứng: live lượt 4–5 (`clarify(yes_no)` rồi không gửi khi bị từ chối), R12 PASS từ v3, G06/G08 PASS | Tool tự chặn khi `confirmed=false`; nhưng prompt gốc v0 từng gọi `send(confirmed=true)` sau lời cảm ơn (G08) — chỉ không gửi được vì thiếu token, nên phải giữ quy tắc xác nhận trong prompt |
 | arXiv/company policy | `transcripts/v3_openai_20261110T125044866247.transcript.json` (lượt 2), `transcripts/v3-final-p1_openai_20261110T143232383389.transcript.json` (lượt 1) | `paper_text(1706.03762, max_pages=2)` đọc thật 2 trang (7118 ký tự); `papers` trả 3 paper thật từ arXiv sau khi thêm quy tắc routing ở `v3-final-p1`. `policy` chỉ có trong eval extension, chưa dùng live | arXiv bị rate-limit (tool tự chờ/retry nhẹ); trước `v3-final-p1` model route yêu cầu arXiv sang `lookup` (live lượt 3) |
-| UI | `app.py` (Streamlit), `transcripts/*_ui_*.transcript.json` | Ô nhập + nút gửi, hiển thị câu trả lời và tool call (args + kết quả) theo từng vòng, nút câu hỏi mẫu, chọn provider/model/version, tự lưu transcript cùng định dạng `chat.py`. Dùng lại `run_model_tool_loop` của `chat.py`, không sửa logic lõi. `tests/test_app_ui.py` (5 test offline, fake provider): gọi tool, lỗi provider, nút câu hỏi mẫu, và 2 test hồi quy cho review của Tân — đổi cấu hình giữa hội thoại không làm lọt lượt cũ vào model, sửa prompt/tools khi UI đang chạy thì hash trong transcript khớp prompt thực gửi (2 test này FAIL trên bản cũ `8fc53d8`, PASS sau khi sửa). Server `streamlit run` trả health `ok`. | Đổi cấu hình hoặc prompt/tools giữa chừng → UI tự bắt đầu hội thoại mới; mỗi lượt ghi `artifact_version`. Lỗi provider (vd. 429 quota) hiển thị trong UI, không crash; label version phải đặt đúng (vd. `v3`) khi demo |
-| Tool unit tests (`tests/`) | [`tools/source_check/schema-fix-test-output.txt`](../tools/source_check/schema-fix-test-output.txt) (bản cuối); [`pytest-output.txt`](../tools/source_check/pytest-output.txt) là số lịch sử lúc bàn giao tool (122) | **131 passed, 0 failed, 0 skipped**: 60 contract + 7 example + 59 trong `test_tools_todo.py` (gồm **42** case `source_check`, có 4 regression cho bản sửa schema PR #7) + 5 UI (`tests/test_app_ui.py`). Đã thay toàn bộ 17 test stub; mọi HTTP request đều mock. Chạy lại trên `main` `5f19ef9`: 131 passed | Test chỉ đo code của tool, không đo model chọn tool/args đúng không — phần đó do eval và đọc args trong log (vd. G10 model tự thêm `source`, unit test không thể bắt) |
+| UI | `app.py` và `tests/test_app_ui.py` (5 test UI offline); live evidence ở B4 tạo bằng `chat.py` | Ô nhập + nút gửi, hiển thị câu trả lời và tool call (args + kết quả) theo từng vòng, nút câu hỏi mẫu, chọn provider/model/version, tự lưu transcript cùng định dạng `chat.py`. Dùng lại `run_model_tool_loop` của `chat.py`, không sửa logic lõi. `tests/test_app_ui.py` (5 test offline, fake provider): gọi tool, lỗi provider, nút câu hỏi mẫu, và 2 test hồi quy cho review của Tân — đổi cấu hình giữa hội thoại không làm lọt lượt cũ vào model, sửa prompt/tools khi UI đang chạy thì hash trong transcript khớp prompt thực gửi (2 test này FAIL trên bản cũ `8fc53d8`, PASS sau khi sửa). Server `streamlit run` trả health `ok`. | Đổi cấu hình hoặc prompt/tools giữa chừng → UI tự bắt đầu hội thoại mới; mỗi lượt ghi `artifact_version`. Lỗi provider (vd. 429 quota) hiển thị trong UI, không crash; label version phải đặt đúng (vd. `v3`) khi demo |
+| Tool unit tests (`tests/`) | [`tools/source_check/schema-fix-test-output.txt`](../tools/source_check/schema-fix-test-output.txt) (bản cuối); [`pytest-output.txt`](../tools/source_check/pytest-output.txt) là số lịch sử lúc bàn giao tool (122) | **131 passed, 0 failed, 0 skipped**: 60 contract + 7 example + 59 trong `test_tools_todo.py` (gồm **42** case `source_check`, có 4 regression cho bản sửa schema PR #7) + 5 UI (`tests/test_app_ui.py`). Đã thay toàn bộ 17 test stub; mọi HTTP request đều mock. Kiểm tra chốt bài: [pytest-final.txt](verification/pytest-final.txt), 131 passed | Test chỉ đo code của tool, không đo model chọn tool/args đúng không — phần đó do eval và đọc args trong log (vd. G10 model tự thêm `source`, unit test không thể bắt) |
 
 Tool unit tests: Trần Minh Tân bổ sung tool offline `source_check` để kiểm tra URL HTTP(S) và trường nguồn của item nghiên cứu, trả trạng thái từng item và danh sách item có metadata hợp lệ. Chưa tìm thấy bug trong tool có sẵn. Ví dụ lỗi unit test bắt được mà eval không bắt được: model có thể gọi đúng `source_check(items=...)` (eval PASS), nhưng implementation vẫn có thể nhận nhầm URL có port sai hoặc không báo `missing_source` — unit test kiểm tra trực tiếp các output đó.
 
@@ -196,28 +198,6 @@ Tool unit tests: Trần Minh Tân bổ sung tool offline `source_check` để ki
   - `tools.yaml`: mô tả `sort_by` của `papers` (live `v3-final-p1` vẫn bỏ qua "mới nộp"); thử cách khác cho R13 (lỗi duy nhất còn lại ở base).
   - Đã đo lại base suite trên bản code cuối (`v3-final`, `v3-final-p1`, `v4`: đều 0.95) và ghi vào `version_log.csv`.
 
-## B7. Small Local Model Challenge (bonus)
+## B7. Bonus model local
 
-Only fill if your team did the local model challenge.
-
-| Version | Model (provider) | Prompt/Tools | case_accuracy | tool_routing | argument | multiturn | Run File |
-|---|---|---|---|---|---|---|---|
-| v3 | (cloud) | v3 |  |  |  |  |  |
-| v3-... | (ollama) | v3 |  |  |  |  |  |
-| v3-... | (ollama) | v3 |  |  |  |  |  |
-| v4-local |  |  |  |  |  |  |  |
-| v5-local |  |  |  |  |  |  |  |
-
-Lỗi đặc thù của model nhỏ (đếm từ run JSON):
-
-| Failure Pattern | Count | Example Case | Fix Tried | Helped? |
-|---|---|---|---|---|
-| wrong / hallucinated tool |  |  |  |  |
-| invalid JSON args (`_invalid_json_arguments`) |  |  |  |  |
-| no tool call / answered directly |  |  |  |  |
-| missed `clarify` |  |  |  |  |
-| repeated / unnecessary calls |  |  |  |  |
-
-- Cái gì giúp model nhỏ gọi tool đúng hơn nhất? Bằng chứng?
-- Bản prompt tối ưu cho local chạy trên model cloud thì sao?
-- Khi nào nhóm sẽ chọn model local thay vì cloud cho agent này?
+Nhóm không thực hiện Small Local Model Challenge; không có metric model local để báo cáo.

@@ -1,5 +1,8 @@
 # Phân công công việc nhóm — Day 03 Research Agent Tool Eval
 
+> Phân công ban đầu, được giữ để đối chiếu. Kết quả bản nộp và trạng thái chốt
+> nằm trong [TEAM_HANDOFF_CHECKLIST.md](TEAM_HANDOFF_CHECKLIST.md).
+
 ## 1. Thông tin nhóm
 
 | Thành viên | Mã sinh viên | Vai trò chính |
