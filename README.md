@@ -8,6 +8,9 @@ kiểm thử offline.
 **[Mục lục bằng chứng](docs/EVIDENCE_INDEX.md)** ·
 **[Thành viên](TEAM.md)** · **[Checklist cuối](TEAM_HANDOFF_CHECKLIST.md)**
 
+**Ghi chú danh tính:** `tantm689` và `minhtantran99` đều là Trần Minh Tân
+(2A202603688); xem [ghi chú cho lab coach](TEAM.md#ghi-chú-danh-tính-gitgithub-cho-lab-coach).
+
 ## Kết quả bản nộp
 
 | Hạng mục | Kết quả | Bằng chứng |

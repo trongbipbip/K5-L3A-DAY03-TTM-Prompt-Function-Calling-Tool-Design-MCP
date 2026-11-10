@@ -5,6 +5,12 @@ Bản chốt ngày 10/11/2026 · Prompt v4 · Groq `openai/gpt-oss-120b`.
 ## Team
 
 - Team: **TTM — Trọng · Tân · Minh**
+
+**Ghi chú cho lab coach:** `tantm689` và `minhtantran99` đều là **Trần Minh Tân
+(2A202603688)**. Một số commit dùng tên tác giả Git cũ `tantm689`; tài khoản
+nộp bài là `minhtantran99`. Vui lòng tính các đóng góp dưới hai tên này cho cùng
+một thành viên. Nhóm giữ nguyên lịch sử commit để bảo toàn evidence.
+
 - Members: Nguyễn Nho Trọng (2A202603666) — prompt/routing · Trần Minh Tân (2A202603688) — tool mới + unit test · Vũ Quang Minh (2A202603657) — eval, UI, live chat, report
 - Provider/model: Groq `openai/gpt-oss-120b`, qua adapter `openai`, endpoint `https://api.groq.com/openai/v1`. Các run Gemini trước đó giữ làm lịch sử, không gộp vào phép so sánh Groq.
 
